@@ -22,6 +22,7 @@ def ask(question, chat_log=None):
  presence_penalty=0.3,
  stop=['\n'],
  )
+ print(story)
  story = response['choices'][0]['text']
  return str(story)
  

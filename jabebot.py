@@ -22,8 +22,8 @@ def ask(question, chat_log=None):
  presence_penalty=0.3,
  stop=['\n'],
  )
- print(story)
  story = response['choices'][0]['text']
+ print(story)
  return str(story)
  
 def append_interaction_to_chat_log(question, answer, chat_log=None):

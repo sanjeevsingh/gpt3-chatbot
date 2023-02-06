@@ -6,6 +6,7 @@ app = Flask(__name__)
 app.config['SECRET_KEY'] = 'any-random-string'
 @app.route('/kobot', methods=['POST'])
 def kobot():
+ print("Hello") 
  incoming_msg = request.values['Body']
  print(incoming_msg)
  chat_log = session.get('chat_log')

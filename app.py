@@ -20,7 +20,6 @@ ssl=True)
 app.config['SECRET_KEY'] = 'any-random-string'
 @app.route('/kobot', methods=['POST'])
 def kobot():
- print("Hello") 
  incoming_msg = request.values['Body']
  print(incoming_msg)
  chat_log = session.get('chat_log')
@@ -45,6 +44,11 @@ def guestUser():
         'name' : data['name'], 
         'email' : data['email']
         })
+    pusher.trigger(u'private-' + data['email'],u'client-support-new-message',{
+        'name' : u'Sanjeev',
+        'email' : u's@a.com',
+        'text' : u'Hello ' + data['name'] + u'Welcome !'
+    } )
     return json.dumps(data)
 
 @app.route("/pusher/auth", methods=['POST'])

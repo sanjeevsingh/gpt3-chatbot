@@ -44,7 +44,7 @@ def guestUser():
         'name' : data['name'], 
         'email' : data['email']
         })
-    pusher.trigger(u'private-' + data['email'],u'client-support-new-message',{
+    pusher.trigger(request.form['channel_name'],u'client-support-new-message',{
         'name' : u'Sanjeev',
         'email' : u's@a.com',
         'text' : u'Hello ' + data['name'] + u'Welcome !'

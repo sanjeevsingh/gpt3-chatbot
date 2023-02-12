@@ -40,20 +40,31 @@ def admin():
 @app.route('/new/guest', methods=['POST'])
 def guestUser():
     data = request.json
+    print(data)
     pusher.trigger(u'general-channel', u'new-guest-details', { 
         'name' : data['name'], 
         'email' : data['email']
-        })
-    pusher.trigger(request.form['channel_name'],u'client-support-new-message',{
-        'name' : u'Sanjeev',
-        'email' : u's@a.com',
-        'text' : u'Hello ' + data['name'] + u'Welcome !'
-    } )
+        })    
     return json.dumps(data)
 
 @app.route("/pusher/auth", methods=['POST'])
 def pusher_authentication():
+    print(request.form['channel_name'],request.form['socket_id'])
     auth = pusher.authenticate(channel=request.form['channel_name'],socket_id=request.form['socket_id'])
     return json.dumps(auth)
+
+@app.route("/webhook", methods=['POST'])
+def pusher_webhook():
+  # pusher_client is obtained through pusher_client = pusher.Pusher( ... )
+  webhook = pusher.validate_webhook(
+    key=request.headers.get('X-Pusher-Key'),
+    signature=request.headers.get('X-Pusher-Signature'),
+    body=request.data
+  )
+
+  for event in webhook['events']:
+      print("Channel :" + event["channel"] + " Event : " + event["name"])
+
+  return "ok"
 if __name__ == '__main__':
  app.run(debug=True)

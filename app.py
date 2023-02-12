@@ -64,6 +64,12 @@ def pusher_webhook():
 
   for event in webhook['events']:
       print("Channel :" + event["channel"] + " Event : " + event["name"])
+      print(event)
+      pusher.trigger(event["channel"], u'client-support-new-message', { 
+        'name' : 'Sanjeev', 
+        'sender' : 'a@b.c',
+        'text' : 'Hello ! Welcome to Support Channel'
+        })  
 
   return "ok"
 if __name__ == '__main__':

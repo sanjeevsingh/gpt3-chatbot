@@ -63,12 +63,18 @@ def pusher_webhook():
   )
 
   for event in webhook['events']:
-      print("Channel :" + event["channel"] + " Event : " + event["name"])
-      print(event)
+      print("Channel :" + event["channel"] + " Event : " + event["event"])
+      msg = event["data"]["data"]
+      print(msg)
+      chat_log = session.get('chat_log')
+      answer = ask(msg["text"], chat_log)
+      session['chat_log'] = append_interaction_to_chat_log(msg["text"], answer,
+      chat_log)
+
       pusher.trigger(event["channel"], u'client-support-new-message', { 
         'name' : 'Sanjeev', 
         'sender' : 'a@b.c',
-        'text' : 'Hello ! Welcome to Support Channel'
+        'text' : answer
         })  
 
   return "ok"

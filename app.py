@@ -64,7 +64,7 @@ def pusher_webhook():
 
   for event in webhook['events']:
       print("Channel :" + event["channel"] + " Event : " + event["event"])
-      msg = event["data"]["text"]
+      msg = json.loads(event["data"])
       print(msg)
       chat_log = session.get('chat_log')
       answer = ask(msg["text"], chat_log)
